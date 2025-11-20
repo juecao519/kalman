@@ -1,0 +1,39 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    - run: |
+        sudo apt-get update
+        sudo apt-get install -y -qq git zip unzip openjdk-11-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev build-essential
+    - run: |
+        pip install --upgrade pip
+        pip install buildozer cython
+    - uses: actions/cache@v3
+      with:
+        path: |
+          ~/.buildozer
+          ~/.android
+        key: ${{ runner.os }}-buildozer-${{ hashFiles('Kalman/buildozer.spec') }}
+        restore-keys: |
+          ${{ runner.os }}-buildozer-
+    - run: |
+        cd Kalman
+        buildozer android debug
+    - uses: actions/upload-artifact@v3
+      with:
+        name: app-debug-apk
+        path: Kalman/bin/*.apk
+        retention-days: 30

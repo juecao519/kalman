@@ -1,0 +1,75 @@
+# 📱 一键打包命令 - 复制粘贴即可
+
+## 你的GitHub仓库
+https://github.com/juecao519/kalman.git
+
+---
+
+## 🚀 完整命令（在Kalman文件夹内执行）
+
+```bash
+# 进入Kalman目录
+cd Kalman
+
+# 初始化git（如果还没有）
+git init
+
+# 添加所有文件
+git add .
+
+# 提交代码
+git commit -m "Add vehicle speed detection app with GitHub Actions"
+
+# 添加远程仓库
+git remote add origin https://github.com/juecao519/kalman.git
+
+# 如果远程仓库已存在，先拉取
+git pull origin main --allow-unrelated-histories
+
+# 推送到GitHub
+git branch -M main
+git push -u origin main
+```
+
+---
+
+## ⚠️ 重要提示
+
+1. **确保在Kalman目录下执行**：所有命令都在Kalman文件夹内执行
+2. **模型文件**：确保 `yolov8n.pt` 文件已包含（约6MB）
+3. **GitHub Actions**：`.github/workflows/build-apk.yml` 文件会自动触发构建
+
+---
+
+## 📦 构建完成后
+
+1. 访问：https://github.com/juecao519/kalman/actions
+2. 点击最新的构建任务
+3. 在页面底部下载APK文件
+
+---
+
+## 🔧 如果遇到问题
+
+### 问题1：远程仓库已存在
+```bash
+git pull origin main --allow-unrelated-histories
+git push -u origin main
+```
+
+### 问题2：文件太大无法推送
+```bash
+# 使用Git LFS（如果yolov8n.pt太大）
+git lfs install
+git lfs track "*.pt"
+git add .gitattributes
+git add yolov8n.pt
+git commit -m "Add model file with LFS"
+git push origin main
+```
+
+### 问题3：GitHub Actions未触发
+- 检查 `.github/workflows/build-apk.yml` 文件是否存在
+- 确认文件已提交到仓库
+- 手动触发：GitHub仓库 → Actions → Run workflow
+

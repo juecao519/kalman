@@ -1,0 +1,27 @@
+image: ubuntu:22.04
+
+variables:
+  ANDROID_SDK_VERSION: "30"
+  ANDROID_NDK_VERSION: "23b"
+  DEBIAN_FRONTEND: "noninteractive"
+
+before_script:
+  - apt-get update -qq
+  - apt-get install -y -qq git zip unzip openjdk-11-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev build-essential
+  - pip3 install --upgrade pip
+  - pip3 install buildozer cython
+
+build:
+  stage: build
+  script:
+    - cd Kalman
+    - buildozer android debug
+  artifacts:
+    paths:
+      - Kalman/bin/*.apk
+    expire_in: 30 days
+  only:
+    - main
+    - master
+  timeout: 60 minutes
+

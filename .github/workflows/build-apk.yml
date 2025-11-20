@@ -41,8 +41,7 @@ jobs:
           
     - name: Build APK
       working-directory: ./Kalman
-      run: |
-        buildozer android debug
+      run: buildozer android debug
         
     - name: Upload APK
       uses: actions/upload-artifact@v4

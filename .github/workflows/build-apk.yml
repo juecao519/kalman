@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 120
     
     steps:
     - name: Checkout code
@@ -41,8 +41,8 @@ jobs:
           
     - name: Build APK
       working-directory: ./Kalman
-      run: buildozer android debug
-        
+      run: 
+        buildozer -v android debug 2>&1 | tee build.log || (echo "=== Build failed, showing last 100 lines ===" && tail -100 build.log && exit 1)
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:

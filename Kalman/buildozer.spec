@@ -27,7 +27,7 @@ version = 0.1
 
 # (list) 应用要求
 # 在requirements.txt中列出的依赖会自动包含
-requirements = python3,kivy,opencv,numpy,networkx,ultralytics,pillow,pyjnius,android,openssl
+requirements = python3,kivy,opencv,numpy,networkx,pillow,pyjnius,android,openssl
 
 # (str) 自定义源码树，默认为local
 # source.include_exts = py,png,jpg,kv,atlas
